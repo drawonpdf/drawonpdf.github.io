@@ -1,0 +1,272 @@
+---
+import { useTranslations, getHreflangList, type SupportedLanguage, defaultLang } from '../i18n/utils';
+
+export interface Props {
+  lang?: SupportedLanguage;
+  title?: string;
+  description?: string;
+}
+
+const { lang = defaultLang, title, description } = Astro.props;
+const t = useTranslations(lang);
+
+const pageTitle = title || t('metaTitle');
+const pageDescription = description || t('metaDescription');
+const pageKeywords = t('metaKeywords');
+
+const baseUrl = 'https://drawonpdf.github.io';
+const canonicalUrl = lang === defaultLang ? `${baseUrl}/` : `${baseUrl}/${lang}/`;
+const hreflangs = getHreflangList(baseUrl);
+const ogImageUrl = 'https://res.cloudinary.com/dpx6w78bt/image/upload/f_auto/q_auto/v1786342039/Online_Tool_rc1ybr.png';
+
+// Schema.org Structured Data (Complete Entity Graph)
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${baseUrl}/#website`,
+      'url': `${baseUrl}/`,
+      'name': 'DrawOnPDF',
+      'description': 'Free Online Whiteboard & PDF Annotator for Teachers and Students',
+      'inLanguage': lang,
+      'publisher': {
+        '@id': `${baseUrl}/#organization`
+      }
+    },
+    {
+      '@type': 'Organization',
+      '@id': `${baseUrl}/#organization`,
+      'name': 'DrawOnPDF',
+      'url': `${baseUrl}/`,
+      'logo': {
+        '@type': 'ImageObject',
+        'url': `${baseUrl}/favicon.svg`,
+        'width': 512,
+        'height': 512
+      },
+      'image': ogImageUrl,
+      'sameAs': [
+        'https://buymeacoffee.com/kisharadilz'
+      ]
+    },
+    {
+      '@type': 'BreadcrumbList',
+      '@id': `${canonicalUrl}#breadcrumb`,
+      'itemListElement': [
+        {
+          '@type': 'ListItem',
+          'position': 1,
+          'name': 'Home',
+          'item': `${baseUrl}/`
+        },
+        ...(lang !== defaultLang ? [
+          {
+            '@type': 'ListItem',
+            'position': 2,
+            'name': t('brandTagline'),
+            'item': canonicalUrl
+          }
+        ] : [])
+      ]
+    },
+    {
+      '@type': 'WebApplication',
+      '@id': `${canonicalUrl}#webapp`,
+      'name': 'DrawOnPDF',
+      'url': canonicalUrl,
+      'applicationCategory': 'EducationalApplication',
+      'operatingSystem': 'Any modern web browser (Windows, macOS, iPadOS, iOS, Android, Linux, ChromeOS)',
+      'browserRequirements': 'Requires HTML5 Canvas and JavaScript support. Works 100% client-side.',
+      'description': pageDescription,
+      'image': ogImageUrl,
+      'screenshot': ogImageUrl,
+      'inLanguage': lang,
+      'publisher': {
+        '@id': `${baseUrl}/#organization`
+      },
+      'offers': {
+        '@type': 'Offer',
+        'price': '0',
+        'priceCurrency': 'USD',
+        'availability': 'https://schema.org/InStock'
+      },
+      'featureList': [
+        'Free client-side online whiteboard',
+        'PDF file annotation and markup',
+        'Realistic Whiteboard, Dark Slate, and Chalkboard modes',
+        'Highlighter, Pen, and Precision Eraser',
+        'Multi-page PDF navigation and independent stroke retention',
+        'Merged PDF and high-res PNG export',
+        '100% private zero-server data processing'
+      ]
+    },
+    {
+      '@type': 'HowTo',
+      '@id': `${canonicalUrl}#howto`,
+      'name': t('howToHeading'),
+      'description': t('howToSubheading'),
+      'image': ogImageUrl,
+      'step': [
+        {
+          '@type': 'HowToStep',
+          'position': 1,
+          'name': t('step1Title'),
+          'text': t('step1Desc'),
+          'url': `${canonicalUrl}#how-it-works`
+        },
+        {
+          '@type': 'HowToStep',
+          'position': 2,
+          'name': t('step2Title'),
+          'text': t('step2Desc'),
+          'url': `${canonicalUrl}#how-it-works`
+        },
+        {
+          '@type': 'HowToStep',
+          'position': 3,
+          'name': t('step3Title'),
+          'text': t('step3Desc'),
+          'url': `${canonicalUrl}#how-it-works`
+        }
+      ]
+    },
+    {
+      '@type': 'FAQPage',
+      '@id': `${canonicalUrl}#faq`,
+      'mainEntity': [
+        {
+          '@type': 'Question',
+          'name': t('faq1Q'),
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': t('faq1A')
+          }
+        },
+        {
+          '@type': 'Question',
+          'name': t('faq2Q'),
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': t('faq2A')
+          }
+        },
+        {
+          '@type': 'Question',
+          'name': t('faq3Q'),
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': t('faq3A')
+          }
+        },
+        {
+          '@type': 'Question',
+          'name': t('faq4Q'),
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': t('faq4A')
+          }
+        },
+        {
+          '@type': 'Question',
+          'name': t('faq5Q'),
+          'acceptedAnswer': {
+            '@type': 'Answer',
+            'text': t('faq5A')
+          }
+        }
+      ]
+    }
+  ]
+};
+---
+
+<!DOCTYPE html>
+<html lang={lang} class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+
+    <!-- Google tag (gtag.js) -->
+    <script is:inline async src="https://www.googletagmanager.com/gtag/js?id=G-V90SQQNZBY"></script>
+    <script is:inline>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-V90SQQNZBY');
+    </script>
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Performance Preconnects -->
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
+    <link rel="preconnect" href="https://res.cloudinary.com" crossorigin />
+    <link rel="dns-prefetch" href="https://res.cloudinary.com" />
+
+    <!-- Mobile & PWA Theme Metadata -->
+    <meta name="theme-color" content="#659287" />
+    <meta name="author" content="DrawOnPDF" />
+    <meta name="application-name" content="DrawOnPDF" />
+    <meta name="apple-mobile-web-app-title" content="DrawOnPDF" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+
+    <!-- Anti-FOUC Script for Instant Theme Persistence -->
+    <script is:inline>
+      (function() {
+        try {
+          var stored = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || (!stored && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- SEO Meta Tags -->
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <meta name="keywords" content={pageKeywords} />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- 7 Bidirectional hreflang Tags (including x-default) -->
+    {hreflangs.map((entry) => (
+      <link rel="alternate" hreflang={entry.lang} href={entry.url} />
+    ))}
+
+    <!-- Open Graph / Social Media (100% Verified) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:site_name" content="DrawOnPDF" />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:secure_url" content={ogImageUrl} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="DrawOnPDF - Free Online Whiteboard & PDF Annotator" />
+    <meta property="og:locale" content={lang} />
+
+    <!-- Twitter Cards (100% Verified) -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content={canonicalUrl} />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={pageDescription} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content="DrawOnPDF - Free Online Whiteboard & PDF Annotator" />
+
+    <!-- JSON-LD Structured Data Schema (Organization + WebSite + WebApplication + HowTo + FAQPage + BreadcrumbList) -->
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+  </head>
+  <body class="min-h-screen bg-[#fafcf9] text-slate-900 dark:bg-slate-950 dark:text-slate-100 transition-colors duration-200 antialiased flex flex-col font-sans selection:bg-brand-soft selection:text-brand-700">
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,52 @@
+---
+import { useTranslations, type SupportedLanguage } from '../i18n/utils';
+
+export interface Props {
+  lang: SupportedLanguage;
+}
+
+const { lang } = Astro.props;
+const t = useTranslations(lang);
+
+const faqs = [
+  { q: t('faq1Q'), a: t('faq1A') },
+  { q: t('faq2Q'), a: t('faq2A') },
+  { q: t('faq3Q'), a: t('faq3A') },
+  { q: t('faq4Q'), a: t('faq4A') },
+  { q: t('faq5Q'), a: t('faq5A') },
+];
+---
+
+<section id="faq" class="py-16 sm:py-24 border-t border-slate-200 dark:border-slate-800 bg-white/50 dark:bg-slate-900/40">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6">
+    <div class="text-center mb-12">
+      <span class="text-xs font-bold uppercase tracking-widest text-[#659287] dark:text-[#88BDA4] bg-[#E6F2DD] dark:bg-[#659287]/20 px-3 py-1 rounded-full border border-[#B1D3B9] dark:border-[#659287]/40">
+        FAQ
+      </span>
+      <h2 class="mt-3 text-2xl sm:text-4xl font-extrabold tracking-tight text-slate-900 dark:text-white">
+        {t('faqHeading')}
+      </h2>
+      <p class="mt-3 text-sm sm:text-base text-slate-600 dark:text-slate-400">
+        {t('faqSubheading')}
+      </p>
+    </div>
+
+    <div class="space-y-4">
+      {faqs.map((faq, index) => (
+        <details class="group bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-5 sm:p-6 transition-all duration-200 open:shadow-md open:border-[#88BDA4] dark:open:border-[#659287]">
+          <summary class="flex items-center justify-between cursor-pointer list-none select-none text-base sm:text-lg font-bold text-slate-900 dark:text-white gap-4">
+            <span>{faq.q}</span>
+            <span class="shrink-0 w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 flex items-center justify-center text-slate-500 dark:text-slate-400 group-open:rotate-180 group-open:bg-[#E6F2DD] group-open:text-[#659287] dark:group-open:bg-[#659287]/20 dark:group-open:text-[#88BDA4] transition-all duration-200">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="6 9 12 15 18 9"></polyline>
+              </svg>
+            </span>
+          </summary>
+          <div class="mt-4 pt-4 border-t border-slate-100 dark:border-slate-800/80 text-sm sm:text-base leading-relaxed text-slate-600 dark:text-slate-400">
+            <p>{faq.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none">
+  <rect width="48" height="48" rx="12" fill="#659287"/>
+  <!-- PDF page -->
+  <path d="M12 10C12 8.89543 12.8954 8 14 8H26L36 18V38C36 39.1046 35.1046 40 34 40H14C12.8954 40 12 39.1046 12 38V10Z" fill="#E6F2DD"/>
+  <path d="M26 8V18H36" fill="#B1D3B9"/>
+  <!-- Pen stroke line -->
+  <path d="M16 26C20 23 24 29 28 26" stroke="#659287" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Pencil icon drawing -->
+  <path d="M26 32L34 24L37 27L29 35L25 36L26 32Z" fill="#88BDA4" stroke="#659287" stroke-width="1"/>
+  <path d="M34 24L37 27" stroke="#507c72" stroke-width="1"/>
+</svg>
